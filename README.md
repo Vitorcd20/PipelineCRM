@@ -1,79 +1,79 @@
-# PipelineCRM 
+# PipelineCRM
 
-A modern Kanban CRM interface built with React + Vite for managing sales opportunities.
+Uma interface moderna de CRM em Kanban, construída com React + Vite para gerenciar oportunidades de vendas.
 
 ![PipelineCRM](PIPELINECRM-1.png)
 
-## Tech Stack
+## Stack Tecnológica
 
-| Concern | Library |
-|---------|---------|
+| Responsabilidade | Biblioteca |
+|-----------------|------------|
 | Build & Dev | Vite + TypeScript |
-| Server state | **TanStack Query v5** — cache, loading, error, invalidation |
-| Global UI state | **Zustand** — filters, view mode, modal open/close |
-| Forms + validation | **React Hook Form** + **Zod** |
-| Styling | Pure CSS with CSS custom properties (no Tailwind) |
-| HTTP client | Axios |
-| Icons | Lucide React |
-| Testing | **Vitest** + **Testing Library** |
+| Estado do servidor | **TanStack Query v5** — cache, loading, error, invalidação |
+| Estado global de UI | **Zustand** — filtros, modo de visualização, abertura/fechamento de modal |
+| Formulários + validação | **React Hook Form** + **Zod** |
+| Estilização | CSS puro com propriedades customizadas (sem Tailwind) |
+| Cliente HTTP | Axios |
+| Ícones | Lucide React |
+| Testes | **Vitest** + **Testing Library** |
 
-## Getting Started
+## Como Começar
 
-> The frontend proxies `/api` → `http://localhost:3000`. Start the backend first.
+> O frontend faz proxy de `/api` → `http://localhost:3000`. Inicie o backend primeiro.
 
 ```bash
-# 1. Install dependencies
+# 1. Instalar dependências
 npm install
 
-# 2. Start the API (in a separate terminal)
+# 2. Iniciar a API (em outro terminal)
 cd ../oportunidades-api && npm run start:dev
 
-# 3. Start the frontend
+# 3. Iniciar o frontend
 npm run dev          # http://localhost:5173
 ```
 
-## Available Scripts
+## Scripts Disponíveis
 
 ```bash
-npm run dev          # development server
-npm run build        # production build
-npm run test         # run tests once
-npm run test:watch   # watch mode
-npm run test:coverage # coverage report
+npm run dev           # servidor de desenvolvimento
+npm run build         # build de produção
+npm run test          # executar testes uma vez
+npm run test:watch    # modo de observação
+npm run test:coverage # relatório de cobertura
 ```
 
-## Features
+## Funcionalidades
 
-- **Kanban Board** — four columns (Open / Negotiating / Won / Lost) with per-column totals
-- **List View** — table layout with sortable rows, toggle from navbar
-- **Sidebar** — live pipeline value, per-status counts and aggregated value, one-click status filter
-- **Client search** — debounce-friendly search field that filters across views
-- **Inline status update** — click the badge on any card to change status with a dropdown
-- **Two-step delete** — confirm prompt prevents accidental deletions
-- **Create modal** — validated form (React Hook Form + Zod) with real-time field errors
-- **Skeleton loaders** — shimmer placeholders on every loading state
-- **Toast notifications** — success/error feedback for every mutation
-- **Responsive** — sidebar hidden on mobile, kanban columns scroll horizontally
+- **Quadro Kanban** — quatro colunas (Aberta / Negociando / Ganha / Perdida) com totais por coluna
+- **Visualização em Lista** — layout de tabela com linhas ordenáveis, alternável pela navbar
+- **Sidebar** — valor total do pipeline, contagens e valores agregados por status, filtro por status com um clique
+- **Busca por cliente** — campo de busca com debounce que filtra em todas as visualizações
+- **Atualização de status inline** — clique no badge de qualquer card para alterar o status com um dropdown
+- **Exclusão em duas etapas** — confirmação prévia evita exclusões acidentais
+- **Modal de criação** — formulário validado (React Hook Form + Zod) com erros de campo em tempo real
+- **Skeleton loaders** — placeholders animados em todos os estados de carregamento
+- **Notificações toast** — feedback de sucesso/erro para cada mutação
+- **Responsivo** — sidebar oculta no mobile, colunas do kanban com scroll horizontal
 
-## Architecture Decisions
+## Decisões de Arquitetura
 
-**Pure CSS over Tailwind**  
-Tailwind v4 + `@tailwindcss/vite` had a plugin issue in this env that caused styles not to be applied. Switched to CSS custom properties (variables) which gave more design control with zero runtime overhead.
+**CSS puro em vez de Tailwind**
+O Tailwind v4 + `@tailwindcss/vite` apresentou um problema de plugin neste ambiente que impedia a aplicação dos estilos. A solução foi migrar para propriedades customizadas CSS (variáveis), o que trouxe mais controle de design sem overhead de runtime.
 
-**Zustand for UI state, TanStack Query for server state**  
-These two concerns are separated intentionally. Zustand owns ephemeral UI (which filter is active, modal open). TanStack Query owns all server data with automatic cache invalidation after mutations — no manual `useState` arrays to sync.
+**Zustand para estado de UI, TanStack Query para estado do servidor**
+Essas duas responsabilidades são separadas intencionalmente. O Zustand gerencia o estado efêmero de UI (filtro ativo, modal aberto). O TanStack Query gerencia todos os dados do servidor com invalidação automática de cache após mutações — sem arrays manuais de `useState` para sincronizar.
 
-**Zod + React Hook Form**  
-Schema-first validation means the Zod schema is the single source of truth. TypeScript types are inferred from it (`z.infer`), so the form, the API payload, and the types all stay in sync automatically.
+**Zod + React Hook Form**
+A validação orientada por schema significa que o schema Zod é a única fonte de verdade. Os tipos TypeScript são inferidos a partir dele (`z.infer`), mantendo o formulário, o payload da API e os tipos sempre em sincronia.
 
-**CSS architecture**  
-All design tokens live in `:root` CSS variables. Components reference variables, never hardcoded values. This makes theming and dark mode trivial. Class names follow a BEM-lite convention (`deal-card`, `deal-card-top`, `deal-value`).
+**Arquitetura CSS**
+Todos os tokens de design vivem em variáveis CSS no `:root`. Os componentes referenciam variáveis, nunca valores fixos. Isso torna temas e modo escuro triviais. Os nomes de classes seguem uma convenção BEM-lite (`deal-card`, `deal-card-top`, `deal-value`).
 
-## Project Structure
+## Estrutura do Projeto
 
 ```
 src/
-├── __tests__/           # Vitest + Testing Library tests
+├── __tests__/           # Testes com Vitest + Testing Library
 │   ├── CreateModal.test.tsx
 │   ├── DealCard.test.tsx
 │   ├── KanbanColumn.test.tsx
@@ -81,7 +81,7 @@ src/
 │   ├── StatusBadge.test.tsx
 │   └── utils.test.ts
 ├── components/
-│   ├── dashboard/       Sidebar (pipeline overview + filters)
+│   ├── dashboard/       Sidebar (visão geral do pipeline + filtros)
 │   ├── kanban/          KanbanBoard, KanbanColumn
 │   ├── layout/          Navbar
 │   ├── opportunities/   DealCard, ListView, CreateModal
@@ -93,14 +93,14 @@ src/
 └── types/               index.ts
 ```
 
-## What I'd Improve With More Time
+## O que Melhoraria com Mais Tempo
 
-- **Drag-and-drop** between Kanban columns (`@dnd-kit/core` is already installed)
-- **Optimistic updates** — update the UI instantly before the API responds
-- **Pagination / infinite scroll** on the list view for large datasets
-- **Date range filters** and a value range slider in the sidebar
-- **E2E tests** with Playwright covering the full create → update → delete flow
-- **React Router / TanStack Router** for deep-linkable filtered views (`/board?status=aberta`)
-- **Storybook** for isolated component development and visual regression
-- **Graphic Dashboard** for better analysis
-- **Ai Integration**
+- **Drag-and-drop** entre colunas do Kanban (`@dnd-kit/core` já está instalado)
+- **Atualizações otimistas** — atualizar a UI imediatamente antes da resposta da API
+- **Paginação / scroll infinito** na visualização em lista para grandes volumes de dados
+- **Filtros por intervalo de datas** e slider de intervalo de valor na sidebar
+- **Testes E2E** com Playwright cobrindo o fluxo completo de criar → atualizar → excluir
+- **React Router / TanStack Router** para visualizações filtradas com deep-link (`/board?status=aberta`)
+- **Storybook** para desenvolvimento isolado de componentes e regressão visual
+- **Dashboard Gráfico** para melhor análise
+- **Integração com IA** A IA analisa os dados do deal (valor, tempo em aberto, histórico de status
