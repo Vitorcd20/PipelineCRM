@@ -1,6 +1,8 @@
-# PipelineCRM — Frontend
+# PipelineCRM 
 
 A modern Kanban CRM interface built with React + Vite for managing sales opportunities.
+
+![PipelineCRM](assets/PIPELINECRM.png)
 
 ## Tech Stack
 
