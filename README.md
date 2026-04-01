@@ -2,7 +2,7 @@
 
 A modern Kanban CRM interface built with React + Vite for managing sales opportunities.
 
-![PipelineCRM](PIPELINECRM.png)
+![PipelineCRM](PIPELINECRM-1.png)
 
 ## Tech Stack
 
